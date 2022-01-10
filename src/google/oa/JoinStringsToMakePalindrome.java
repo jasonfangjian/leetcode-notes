@@ -21,12 +21,12 @@ public class JoinStringsToMakePalindrome {
     Todo:need more test cases
      */
     public static void main(String[] args){
-        System.out.println(new JoinStringsToMakePalindrome().solution(new String[]{"ab","hu","ba","nn"})); //6
-        System.out.println(new JoinStringsToMakePalindrome().solution(new String[]{"ck","kc","ho","kc"})); //4
-        System.out.println(new JoinStringsToMakePalindrome().solution(new String[]{"ck","kc","ho","kc","ck","nn","nn","nn"}));//14
-        System.out.println(new JoinStringsToMakePalindrome().solution(new String[]{"ck","kc","ho","kc","ck","nn","nn","nn","cc"}));//14
-        System.out.println(new JoinStringsToMakePalindrome().solution(new String[]{"ck","ck","ck","kc","ho","kc","ck","nn","nn","nn","cc"}));//14
-        System.out.println(new JoinStringsToMakePalindrome().solution(new String[]{"xx","xx","nn","mm","mm","mm","xx"}));//10
+        System.out.println(new JoinStringsToMakePalindrome().count(new String[]{"ab","hu","ba","nn"})); //6
+        System.out.println(new JoinStringsToMakePalindrome().count(new String[]{"ck","kc","ho","kc"})); //4
+        System.out.println(new JoinStringsToMakePalindrome().count(new String[]{"ck","kc","ho","kc","ck","nn","nn","nn"}));//14
+        System.out.println(new JoinStringsToMakePalindrome().count(new String[]{"ck","kc","ho","kc","ck","nn","nn","nn","cc"}));//14
+        System.out.println(new JoinStringsToMakePalindrome().count(new String[]{"ck","ck","ck","kc","ho","kc","ck","nn","nn","nn","cc"}));//14
+        System.out.println(new JoinStringsToMakePalindrome().count(new String[]{"xx","xx","nn","mm","mm","mm","xx"}));//10
     }
 
     //may have corner cases are not considered
@@ -97,5 +97,28 @@ public class JoinStringsToMakePalindrome {
         return count + doubleLetter;
     }
 
+
+    public  int count(String[] a) {
+        Map<String, Integer> map = new HashMap<>();
+        int result = 0;
+        for (String s: a) {
+            String reversed = s.charAt(1) + "" + s.charAt(0);
+            if(map.getOrDefault(reversed, 0) > 0) {
+                result += 4;
+                map.put(reversed, map.get(reversed) - 1);
+            }
+            else {
+                map.put(s, map.getOrDefault(s, 0) + 1);
+            }
+        }
+        for(var remainEntry: map.entrySet()) {
+            String remain = remainEntry.getKey();
+            if(remainEntry.getValue() > 0 && remain.charAt(0) == remain.charAt(1)) {
+                result += 2;
+                break;
+            }
+        }
+        return result;
+    }
 
 }
